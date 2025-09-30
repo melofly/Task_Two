@@ -13,3 +13,10 @@ class DriverSinglton:
     def get_driver(self):
         return self.driver
 
+    @classmethod
+    def quit(cls):
+        if cls._instance is not None:
+            cls._instance.driver.quit()
+            cls._instance = None
+
+

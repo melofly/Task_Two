@@ -8,4 +8,4 @@ def driver():
     driver = DriverSinglton().get_driver()
     driver.get(URL)
     yield driver
-    driver.quit()
+    DriverSinglton.quit()

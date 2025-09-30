@@ -17,7 +17,7 @@ class StorePage(BasePage):
         elements = self.wait.until(EC.visibility_of_all_elements_located(self.RESULT_ITEM_FINAL_PRICE))
         prices = []
         for el in elements[:value_list]:
-            text = el.text.strip().replace(",", ".").replace("€", "")
+            text = el.text.strip().replace(",", ".").replace("руб", "")
             try:
                 price = float(text)
                 prices.append(price)

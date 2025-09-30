@@ -9,7 +9,6 @@ class MainPage(BasePage):
 
 
     def open_login_page(self):
-        self.wait.until(EC.visibility_of_element_located(self.LOG_BTN))
         self.wait.until(EC.element_to_be_clickable(self.LOG_BTN)).click()
 
     def search_games_in_store(self, game):

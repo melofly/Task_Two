@@ -1,8 +1,10 @@
 from selenium.webdriver.support.wait import WebDriverWait
+from config.config_reader import ConfigReader
+
+config = ConfigReader()
 
 class BasePage:
-    TIMEOUT = 10
 
-    def __init__(self, driver, timeout=TIMEOUT):
+    def __init__(self, driver):
         self.driver = driver
-        self.wait = WebDriverWait(driver, timeout)
+        self.wait = WebDriverWait(driver, config.get('timeout'))

@@ -6,7 +6,10 @@ class StorePage(BasePage):
     SORT_GMS = (By.ID, "sort_by_trigger")
     PRICE_DESC_SORT = (By.ID, "Price_DESC")
     RESULT_ITEM_FINAL_PRICE = (By.XPATH, "//*[contains(@class,'discount_final_price')]")
-    SORT_LOADER = (By.XPATH, "//*[@id='search_result_container' and contains(@style,'opacity')]")
+    SORT_LOADER = (
+        By.XPATH,
+        "//*[@id='search_result_container' and contains(@style,'opacity: 0.5;')]"
+    )
 
     def sort_games_desc(self):
         self.wait.until(EC.element_to_be_clickable(self.SORT_GMS)).click()
@@ -17,7 +20,7 @@ class StorePage(BasePage):
         elements = self.wait.until(EC.visibility_of_all_elements_located(self.RESULT_ITEM_FINAL_PRICE))
         prices = []
         for el in elements[:value_list]:
-            text = el.text.strip().replace(",", ".").replace("руб", "")
+            text = el.text.strip().replace(",", ".").replace("€", "")
             try:
                 price = float(text)
                 prices.append(price)

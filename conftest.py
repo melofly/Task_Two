@@ -1,11 +1,12 @@
 import pytest
-from driver import DriverSinglton
+from driver import DriverSingleton
+from config.config_reader import ConfigReader
 
-URL = "https://store.steampowered.com/"
+config = ConfigReader()
 
 @pytest.fixture(scope="function")
 def driver():
-    driver = DriverSinglton().get_driver()
-    driver.get(URL)
+    driver = DriverSingleton().get_driver()
+    driver.get(config.get('base_url'))
     yield driver
-    DriverSinglton.quit()
+    DriverSingleton.quit()

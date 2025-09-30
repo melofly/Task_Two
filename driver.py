@@ -1,22 +1,30 @@
+from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
+from config.config_reader import ConfigReader
 
-class DriverSinglton:
+class DriverSingleton:
     _instance = None
 
-    def __new__(cls):
-        if DriverSinglton._instance is None:
-            DriverSinglton._instance = super().__new__(cls)
-            DriverSinglton._instance.driver = webdriver.Chrome()
-            DriverSinglton._instance.driver.maximize_window()
-        return DriverSinglton._instance
+    def __new__(cls, path_config=ConfigReader.PATH_JS):
+        if DriverSingleton._instance is None:
+            DriverSingleton._instance = super().__new__(cls)
+
+            config = ConfigReader(path_config)
+            headless = config.get("headless", False)
+
+            options = Options()
+            if headless:
+                options.add_argument("--headless=new")
+                options.add_argument("--window-size=1920,1080")
+
+            DriverSingleton._instance.driver = webdriver.Chrome(options=options)
+        return DriverSingleton._instance
 
     def get_driver(self):
         return self.driver
 
     @classmethod
     def quit(cls):
-        if cls._instance is not None:
-            cls._instance.driver.quit()
-            cls._instance = None
-
-
+        if DriverSingleton._instance is not None:
+            DriverSingleton._instance.driver.quit()
+            DriverSingleton._instance = None

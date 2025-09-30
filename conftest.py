@@ -3,7 +3,7 @@ from driver import DriverSinglton
 
 URL = "https://store.steampowered.com/"
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def driver():
     driver = DriverSinglton().get_driver()
     driver.get(URL)

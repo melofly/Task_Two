@@ -1,9 +1,9 @@
 import json
 
 class ConfigReader:
-    PATH_JS = 'config/config.json'
+    PATH_JSON = 'config/config.json'
 
-    def __init__(self, file_path=PATH_JS):
+    def __init__(self, file_path=PATH_JSON):
         self.config = self._load_config(file_path)
 
     def _load_config(self, file_path: str):

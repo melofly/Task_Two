@@ -5,7 +5,7 @@ from config.config_reader import ConfigReader
 class DriverSingleton:
     _instance = None
 
-    def __new__(cls, path_config=ConfigReader.PATH_JS):
+    def __new__(cls, path_config=ConfigReader.PATH_JSON):
         if DriverSingleton._instance is None:
             DriverSingleton._instance = super().__new__(cls)
 

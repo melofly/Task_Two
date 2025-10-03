@@ -2,5 +2,6 @@
   "browser": "chrome",
   "base_url": "https://store.steampowered.com/",
   "timeout": 12,
+  "short_timeout": 8,
   "headless": false
 }

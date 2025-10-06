@@ -15,7 +15,7 @@ class StorePage(BasePage):
         self.wait.until(EC.element_to_be_clickable(self.SORT_GMS)).click()
         self.wait.until(EC.element_to_be_clickable(self.PRICE_DESC_SORT)).click()
         self.short_wait.until(EC.presence_of_element_located(self.SORT_LOADER))
-        self.short_wait.until(EC.invisibility_of_element_located(self.SORT_LOADER))
+        self.short_wait.until_not(EC.presence_of_element_located(self.SORT_LOADER))
 
     def get_prices(self, value_list: int):
         elements = self.wait.until(EC.visibility_of_all_elements_located(self.RESULT_ITEM_FINAL_PRICE))

@@ -1,0 +1,8 @@
+{
+  "browser": "chrome",
+  "base_url": "https://store.steampowered.com/",
+  "timeout": 10,
+  "short_timeout": 5,
+  "short_poll_frequency": 0.1,
+  "headless": false
+}

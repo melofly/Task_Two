@@ -1,7 +1,7 @@
 import json
 
 class ConfigReader:
-    PATH_JSON = 'config/config.json'
+    PATH_JSON = '/Users/melodinero/PycharmProjects/Task_Two/config/config.json'
 
     def __init__(self, file_path=PATH_JSON):
         self.config = self._load_config(file_path)

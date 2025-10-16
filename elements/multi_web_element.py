@@ -1,4 +1,5 @@
 from .base_element import BaseElement
+from selenium.webdriver.support import expected_conditions as EC
 
 class MultiWebElement(BaseElement):
     def wait_for_all_presence(self):

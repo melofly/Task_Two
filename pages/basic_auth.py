@@ -10,7 +10,7 @@ class BasicAuthPage(BasePage):
         super().__init__(browser)
         self.page_name = "Basic Auth Page"
         self.unique_element = Label(browser, self.UNIQUE_ELEMENT_LOC, "Auth success message")
+        self.message = Label(self.browser, self.TEXT_LOCATOR, "Текст")
 
     def get_message(self) -> str:
-        message = Label(self.browser, self.TEXT_LOCATOR, "Текст")
-        return message.get_text()
+        return self.message.get_text()

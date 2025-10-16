@@ -47,13 +47,8 @@ class UploadsPage(BasePage):
 
     def upload_file(self, path_file: str, manual_upload: bool = False):
         if manual_upload:
-            Logger.info('Ручной использование')
-            self.input_file_button.js_click()
-            time.sleep(4)
-            pyautogui.write(path_file)
-            time.sleep(3)
-            pyautogui.press("enter")
-            time.sleep(3)
+            Logger.info(f'Загружен файл вручную {path_file}')
+            self.input_file_button.manual_upload(path=path_file, press_btn='enter')
         else:
             Logger.info(f'Загружен файл {path_file}')
             self.input_file_button.send_keys(path_file)

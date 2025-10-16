@@ -8,7 +8,7 @@ from driver_core.browser import Browser
 from config.config_reader import ConfigReader
 from logger_params.logger import Logger
 
-config = ConfigReader('/Users/melodinero/PycharmProjects/Task_Two/config/config.json')
+config = ConfigReader()
 
 
 class BrowserFactory:
@@ -17,8 +17,8 @@ class BrowserFactory:
         driver: WebDriver
         options = ChromeOptions()
         if headless:
-            options.add_argument('--headless=new')
-            options.add_argument('--window-size=1920,1080')
+            options.add_argument(config.get(key="headless", root_key="options"))
+            options.add_argument(config.get(key="size_window", root_key="options"))
         service = ChromeService()
         driver = webdriver.Chrome(service=service, options=options)
 

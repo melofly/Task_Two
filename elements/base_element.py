@@ -85,8 +85,7 @@ class BaseElement:
             Logger.warning(f"{self}: элемент не найден")
             return False
 
-    def click(self, right_click: bool = False, handle_alert: bool = False):
-
+    def click(self, right_click: bool = False):
         element = self.wait_for_clickable()
 
         try:
@@ -96,18 +95,6 @@ class BaseElement:
             else:
                 Logger.info(f"{self}: обычный клик по {self.description}")
                 element.click()
-
-            if handle_alert:
-                try:
-                    alert = self.browser.switch_to_alert()
-                    alert_text = alert.text
-                    Logger.info(f"{self}: alert появился с текстом '{alert_text}'")
-                    alert.accept()
-                    Logger.info(f"{self}: alert закрыт")
-                    return alert_text
-                except TimeoutException:
-                    return None
-
         except WebDriverException as err:
             Logger.error(f"{self}: клик не удался - {err}")
             raise

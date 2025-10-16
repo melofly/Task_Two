@@ -25,7 +25,7 @@ class FramesPage(BasePage):
     PARENT_TEXT_LOC = "//body[contains(text(), 'Parent frame')]"
     CHILD_TEXT_LOC = "//p[text()='Child Iframe']"
 
-    UNIQUE_ELEMENT_LOC = FRAMES_MENU_BTN
+    UNIQUE_ELEMENT_LOC = MENU_ALERTS_BTN
 
     def __init__(self, browser):
         super().__init__(browser=browser)
@@ -106,7 +106,7 @@ class FramesPage(BasePage):
         Logger.info('Перешли в Frames секцию')
 
     @property
-    def get_text_in_parent_frame(self):
+    def text_in_parent_frame(self):
         Logger.info(f'Получаем текст из {self.parent_frame}')
         self.browser.switch_to_frame(self.parent_frame.wait_for_visible())
         text =  self.parent_frame_text.get_text()
@@ -114,7 +114,7 @@ class FramesPage(BasePage):
         return text
 
     @property
-    def get_text_in_child_frame(self):
+    def text_in_child_frame(self):
         Logger.info(f'Получаем текст из {self.child_frame}')
         self.browser.switch_to_frame(self.parent_frame.wait_for_visible())
         self.browser.switch_to_frame(self.child_frame.wait_for_visible())

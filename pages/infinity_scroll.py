@@ -5,7 +5,7 @@ from elements.web_element import WebElement
 
 class InfiniteScrollPage(BasePage):
     UNIQUE_ELEMENT_LOC = "//*[contains(text(), 'Infinite Scroll')]"
-    PARAGRAPH_LOCATOR = "//div[@class='jscroll-added']"
+    PARAGRAPH_LOCATOR = "//div[contains(@class, 'jscroll-added')]"
 
     def __init__(self, browser):
         super().__init__(browser)
@@ -16,7 +16,7 @@ class InfiniteScrollPage(BasePage):
     def _count_scroll_parg(self, age: int):
         return self.PARAGRAPH_LOCATOR + f'[{age}]'
 
-    def scroll_cont(self, index: int = 22):
+    def scroll_count(self, index: int):
         specific_paragraph = WebElement(
             self.browser,
             self._count_scroll_parg(index),

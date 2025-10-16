@@ -31,5 +31,5 @@ def test_dynamic_content_images_match(browser):
         page.wait_for_open()
         refresh_count += 1
 
-    assert actual == expected, (f"фактически совпадений нет после обновлений страницы")
+    assert actual == expected, f"Ожидалось {expected}, но получили {actual}. Совпадений нет после обновлений страницы."
     Logger.info(f"Найдены совпадающие изображения")

@@ -58,9 +58,6 @@ class UploadsPage(BasePage):
             Logger.info(f'Загружен файл {path_file}')
             self.input_file_button.send_keys(path_file)
 
-
-
-
     def tap_upload_btn(self):
         self.submit_btn_upload.click()
 

@@ -14,7 +14,6 @@ def test_javascript_alerts(browser):
     page.wait_for_open()
     Logger.info("Страница успешно открыта")
 
-    # ---------------- JS Alert ----------------
     actual_text, actual_result = page.click_js_alert()
     expected_alert_text = "I am a JS Alert"
     expected_result_text = "You successfully clicked an alert"
@@ -23,7 +22,6 @@ def test_javascript_alerts(browser):
     assert actual_result == expected_result_text, f"Result текст: expected='{expected_result_text}', actual='{actual_result}'"
     Logger.info("JS Alert проверен успешно")
 
-    # ---------------- JS Confirm ----------------
     actual_text, actual_result = page.click_js_confirm(accept=True)
     expected_alert_text = "I am a JS Confirm"
     expected_result_text = "You clicked: Ok"
@@ -32,7 +30,6 @@ def test_javascript_alerts(browser):
     assert actual_result == expected_result_text, f"Result текст: expected='{expected_result_text}', actual='{actual_result}'"
     Logger.info("JS Confirm проверен успешно")
 
-    # ---------------- JS Prompt ----------------
     random_text = "".join(random.choices(string.ascii_letters + string.digits, k=8))
     actual_text, actual_result = page.click_js_prompt(random_text)
     expected_alert_text = "I am a JS prompt"

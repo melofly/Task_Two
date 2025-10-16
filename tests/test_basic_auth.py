@@ -7,7 +7,7 @@ url = "https://the-internet.herokuapp.com/basic_auth"
 @pytest.mark.parametrize(
     "username, password",
     [
-        ("admin", "admin"),
+        ("admin", "admin")
     ]
 )
 def test_basic_auth(browser, username, password):

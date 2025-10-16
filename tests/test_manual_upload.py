@@ -14,7 +14,7 @@ def test_file_upload(browser):
     expected_filename = "config.json"
 
     page.upload_file(
-        "/Users/melodinero/PycharmProjects/Task_Two/config/config.json",
+        "/config/config.json",
         manual_upload=True
     )
     page.tap_upload_btn()

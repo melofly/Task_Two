@@ -14,8 +14,8 @@ def test_frames_and_nested_frames(browser):
     page.wait_for_open()
     page.open_alers_menu()
     page.go_to_nested_section()
-    actual_parent = page.get_text_in_parent_frame
-    actual_child = page.get_text_in_child_frame
+    actual_parent = page.text_in_parent_frame
+    actual_child = page.text_in_child_frame
 
     page.open_alers_menu()
     page.go_to_frames_section()

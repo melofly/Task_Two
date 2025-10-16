@@ -43,13 +43,3 @@ def test_new_window(browser):
     assert actual_tabs_value == expected_tabs_value, (
         f"Prompt текст: expected='{actual_tabs_value}', actual='{expected_tabs_value}'"
     )
-
-
-
-
-
-
-
-
-
-

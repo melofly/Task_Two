@@ -34,14 +34,3 @@ def test_hovers(browser, index):
     assert expected_url == actual_url, (
         f"Prompt текст: expected='{expected_text}', actual='{actual_text}'"
     )
-
-
-
-
-
-
-
-
-
-
-

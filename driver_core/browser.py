@@ -6,7 +6,7 @@ from selenium.common.exceptions import WebDriverException as error_driver, Timeo
 from config.config_reader import ConfigReader
 from logger_params.logger import Logger
 
-config = ConfigReader('/Users/melodinero/PycharmProjects/Task_Two/config/config.json')
+config = ConfigReader()
 
 class Browser:
     def __init__(self, driver: WebDriver, timeout=config.get('timeout')):
@@ -43,6 +43,10 @@ class Browser:
         except error_driver:
             Logger.error(f"{self}: ошибка при обновлении страницы")
             raise
+
+    @property
+    def current_url(self) -> str:
+        return self._driver.current_url
 
     def close(self):
         handles_count = len(self._driver.window_handles)

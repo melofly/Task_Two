@@ -4,5 +4,9 @@
   "page_load_timeout": 100,
   "short_timeout": 5,
   "short_poll_frequency": 0.1,
-  "headless": true
+  "headless": true,
+  "options": {
+    "headless": "--headless=new",
+    "size_window": "--window-size=1920,1080"
+  }
 }

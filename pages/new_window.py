@@ -30,7 +30,6 @@ class NewWindowPage(BasePage):
             description='текст'
         )
 
-
     def click_btn(self):
         self.new_window_btn.click()
 
@@ -39,6 +38,3 @@ class NewWindowPage(BasePage):
         text = self.window_label.get_text()
         Logger.info(f"{self}: текст в новом окне = '{text}'")
         return text
-
-
-

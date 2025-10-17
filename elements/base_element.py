@@ -13,7 +13,6 @@ import pyautogui
 config = ConfigReader()
 
 class BaseElement:
-
     def __init__(
             self,
             browser: Browser,
@@ -57,17 +56,11 @@ class BaseElement:
     def wait_for_presence(self) -> WebElement:
         return self._wait_for(EC.presence_of_element_located)
 
-    def wait_for_all_presence(self):
-        return self._wait_for(EC.presence_of_all_elements_located)
-
     def wait_for_clickable(self) -> WebElement:
         return self._wait_for(EC.element_to_be_clickable)
 
     def wait_for_visible(self) -> WebElement:
         return self._wait_for(EC.visibility_of_element_located)
-
-    def wait_for_all_visible(self):
-        return self._wait_for(EC.visibility_of_all_elements_located)
 
     def send_keys(self, value: str):
         try:
@@ -122,24 +115,9 @@ class BaseElement:
 
     def get_attribute(
             self,
-            name: str,
-            multiple: bool = False
-    ) -> str | list[str]:
-        if multiple:
-            try:
-                elements = self._wait.until(
-                    EC.presence_of_all_elements_located(self.locator)
-                )
-                values = [el.get_attribute(name) for el in elements]
-                Logger.info(f"{self}: найдено {len(values)} элементов, атрибут '{name}' = {values}")
-                return values
-            except TimeoutException as err:
-                Logger.error(f"{self}: таймаут при ожидании нескольких элементов — {err}")
-                raise
-            except WebDriverException as err:
-                Logger.error(f"{self}: ошибка при получении нескольких атрибутов — {err}")
-                raise
-        else:
+            name: str
+    ) -> str:
+        try:
             element = self.wait_for_presence()
             Logger.info(f"{self}: получение атрибута '{name}'")
             try:
@@ -179,10 +157,9 @@ class BaseElement:
             block: str = "center",
     ):
         el = self.wait_for_presence()
+        Logger.info(f"{self}: скролл")
         self.browser.execute_script(
             f"arguments[0].scrollIntoView({{ behavior: '{behavior}', block: '{block}' }});",
             el
         )
-
-        Logger.info(f"{self}: скролл")
         return self

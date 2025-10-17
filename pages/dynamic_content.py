@@ -1,6 +1,6 @@
 from pages.base_page import BasePage
 from elements.label import Label
-from elements.image import Image
+from elements.web_element import WebElement
 
 
 
@@ -15,12 +15,12 @@ class DynamicContentPage(BasePage):
 
 
     def get_images_src(self):
-        images = Image(
+        images = WebElement(
             browser=self.browser,
             locator=self.IMAGES_LOC,
             description='картинки'
         )
-        images_src = images.get_attribute("src", multiple=True)
+        images_src = images.get_attribute("src")
         src_list = []
 
         for image in images_src:

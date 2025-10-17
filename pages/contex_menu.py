@@ -12,6 +12,5 @@ class ContextMenuPage(BasePage):
         self.hotspot = WebElement(self.browser, self.HOTSPOT_LOCATOR, "Hotspot area")
         self.unique_element = self.hotspot
 
-
     def get_text_in_trigger(self):
         return self.hotspot.click(right_click=True)

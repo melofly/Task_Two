@@ -37,7 +37,7 @@ def test_new_window(browser):
     page.browser.switch_to_tab(1)
     page.browser.close()
 
-    actual_tabs_value = page.browser.tabs_count()
+    actual_tabs_value = page.browser.tabs_count
     expected_tabs_value = 1
 
     assert actual_tabs_value == expected_tabs_value, (

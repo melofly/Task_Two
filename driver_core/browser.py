@@ -71,7 +71,7 @@ class Browser:
         finally:
             self.main_handle = None
 
-
+    @property
     def tabs_count(self):
         handles_count = len(self._driver.window_handles)
         Logger.info(f"{self}: открыто вкладок = {handles_count}")

@@ -22,7 +22,7 @@ class HoversPage(BasePage):
             description='Уникальный элемент страницы (фигуры пользователей)'
         )
 
-        self.users_profile = Image(
+        self.users_profile = WebElement(
             browser=self.browser,
             locator=self.USERS_PROFILE,
             description='Профили пользователей (аватары)'
@@ -64,7 +64,6 @@ class HoversPage(BasePage):
         return text
 
     def click_user_profile_link(self, index: int):
-        el = self.get_user_link_element(index)
-        el.click()
-        current_url = self.browser.get_current_url
+        self.get_user_link_element(index).click()
+        current_url = self.browser.current_url
         Logger.info(f'{self}: переход на {current_url}')

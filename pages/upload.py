@@ -4,7 +4,6 @@ from elements.label import Label
 from pages.base_page import BasePage
 from driver_core.browser import Browser
 from logger_params.logger import Logger
-import time
 
 
 class UploadsPage(BasePage):
@@ -56,10 +55,6 @@ class UploadsPage(BasePage):
     def tap_upload_btn(self):
         self.submit_btn_upload.click()
 
-    @property
     def get_text_success_page(self):
         text = {self.label_file_page.get_text(): self.file_name.get_text()}
         return text
-
-
-

@@ -113,7 +113,7 @@ class Browser:
         Logger.info(f"{self}: переключение во frame")
         return self._driver.switch_to.frame(frame)
 
-    def switch_to_default_frame(self):
+    def switch_to_default_content(self):
         Logger.info("Возврат из iframe в основной контент страницы")
         return self._driver.switch_to.default_content()
 

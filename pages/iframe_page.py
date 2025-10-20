@@ -110,7 +110,7 @@ class FramesPage(BasePage):
         Logger.info(f'Получаем текст из {self.parent_frame}')
         self.browser.switch_to_frame(self.parent_frame.wait_for_visible())
         text =  self.parent_frame_text.get_text()
-        self.browser.switch_to_default_frame()
+        self.browser.switch_to_default_content()
         return text
 
     @property
@@ -119,7 +119,7 @@ class FramesPage(BasePage):
         self.browser.switch_to_frame(self.parent_frame.wait_for_visible())
         self.browser.switch_to_frame(self.child_frame.wait_for_visible())
         text = self.child_frame_text.get_text()
-        self.browser.switch_to_default_frame()
+        self.browser.switch_to_default_content()
         return text
 
     def get_text_in_frame(self, frame_id: int):
@@ -130,7 +130,7 @@ class FramesPage(BasePage):
             self.browser.switch_to_frame(self.frame_two_on_frame_section.wait_for_visible())
 
         text = self.frame_text.get_text()
-        self.browser.switch_to_default_frame()
+        self.browser.switch_to_default_content()
         return text
 
 

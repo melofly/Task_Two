@@ -13,7 +13,7 @@ def test_file_upload(browser):
     expected_label = "File Uploaded!"
     expected_filename = "config.json"
 
-    page.upload_file("/Users/melodinero/PycharmProjects/Task_Two/config/config.json")
+    page.upload_file("config/config.json")
     page.tap_upload_btn()
 
     actual_label, actual_filename = next(iter(page.get_text_success_page.items()))

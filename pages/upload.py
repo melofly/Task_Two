@@ -1,5 +1,6 @@
 import pyautogui
 from elements.button import Button
+from elements.input import Input
 from elements.label import Label
 from pages.base_page import BasePage
 from driver_core.browser import Browser
@@ -23,7 +24,7 @@ class UploadsPage(BasePage):
             locator=self.UNIQUE_ELEMENT_LOC,
             description='Уникальный элемент страницы'
         )
-        self.input_file_button = Button(
+        self.input_file_button = Input(
             self.browser,
             self.INPUT_FILE_BTN,
             description='Кнопка загрузки'

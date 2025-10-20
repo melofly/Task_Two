@@ -7,7 +7,6 @@ from logger_params.logger import Logger
 from config.config_reader import ConfigReader
 from selenium.webdriver import ActionChains
 from driver_core.browser import Browser
-import pyautogui
 
 
 config = ConfigReader()
@@ -61,13 +60,6 @@ class BaseElement:
 
     def wait_for_visible(self) -> WebElement:
         return self._wait_for(EC.visibility_of_element_located)
-
-    def send_keys(self, value: str):
-        try:
-            Logger.info(f'{self}: вставляем в поле {value}')
-            return self.wait_for_clickable().send_keys(value)
-        except TimeoutException:
-            Logger.warning(f"{self}: произошла ошибка ввода")
 
     def is_exists(self) -> bool:
         try:
@@ -145,12 +137,6 @@ class BaseElement:
         ActionChains(self.browser.driver).move_to_element(el).perform()
         Logger.info(f"{self}: наведение курсора на элемент")
 
-    def manual_upload(self, path: str, press_btn: str):
-        self.click()
-        pyautogui.write(path)
-        pyautogui.press(press_btn)
-
-
     def scroll(
             self,
             behavior: str = "smooth",
@@ -162,4 +148,3 @@ class BaseElement:
             f"arguments[0].scrollIntoView({{ behavior: '{behavior}', block: '{block}' }});",
             el
         )
-        return self

@@ -16,3 +16,10 @@ class Input(Elements):
         pyautogui.write(path)
         pyautogui.press(press_btn)
 
+    def upload_file(self, path_file: str, manual_upload: bool = False):
+        if manual_upload:
+            Logger.info(f'Загружен файл вручную {path_file}')
+            self.wait_for_clickable().manual_upload(path=path_file, press_btn='enter')
+        Logger.info(f'Загружен файл {path_file}')
+        self.wait_for_clickable().send_keys(path_file)
+

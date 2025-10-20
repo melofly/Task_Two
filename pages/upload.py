@@ -45,13 +45,8 @@ class UploadsPage(BasePage):
             description='Название файла'
         )
 
-    def upload_file(self, path_file: str, manual_upload: bool = False):
-        if manual_upload:
-            Logger.info(f'Загружен файл вручную {path_file}')
-            self.input_file_button.manual_upload(path=path_file, press_btn='enter')
-        else:
-            Logger.info(f'Загружен файл {path_file}')
-            self.input_file_button.send_keys(path_file)
+    def upload_file(self, path_file: str):
+        self.input_file_button.upload_file(path_file)
 
     def tap_upload_btn(self):
         self.submit_btn_upload.click()

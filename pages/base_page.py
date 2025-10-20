@@ -13,9 +13,6 @@ class BasePage:
          Logger.info(f"{self}: ждет открытия")
          self.unique_element.wait_for_presence()
 
-     def refresh_page(self):
-         self.browser.refresh()
-
      def __str__(self) -> str:
          return f"{self.__class__.__name__}[{self.page_name}]"
 

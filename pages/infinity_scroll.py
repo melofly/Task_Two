@@ -17,11 +17,11 @@ class InfiniteScrollPage(BasePage):
         return self.PARAGRAPH_LOCATOR + f'[{age}]'
 
     def scroll_count(self, index: int):
+        Logger.info(f"Прокрутили до параграфа №{index}")
         specific_paragraph = WebElement(
             self.browser,
             self._count_scroll_parg(index),
             f"Paragraph #{index}"
         )
         specific_paragraph.scroll()
-        Logger.info(f"Прокрутили до параграфа №{index}")
 

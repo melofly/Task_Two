@@ -53,9 +53,9 @@ class HoversPage(BasePage):
         return WebElement(browser=self.browser, locator=loc, description=f"{desc} #{index}")
 
     def hover_on_user(self, index: int):
+        Logger.info(f"{self}: наведены на профиль пользователя #{index}")
         el = self.get_user_profile_element(index)
         el.hover()
-        Logger.info(f"{self}: наведены на профиль пользователя #{index}")
 
     def get_user_name(self, index: int) -> str:
         el = self.get_user_name_element(index)

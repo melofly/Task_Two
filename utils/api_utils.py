@@ -1,8 +1,11 @@
 from requests import Session
 import requests
-from logging import Logger
+from logger.logger import Logger
 import curlify
 import json
+
+from selenium.webdriver.support.expected_conditions import none_of
+
 from utils.json_utils import JsonUtils
 
 def log_response(func):
@@ -45,5 +48,23 @@ class ApiUtils:
             self._url + endpoint_url,
             data,
             json,
+            **kwargs
+        )
+
+    @log_response
+    def delete(self, endpoint_url, data=None, json=None, **kwargs):
+        return self.session.delete(
+            url=self._url + endpoint_url,
+            data=data,
+            json=json,
+            **kwargs
+        )
+
+    @log_response
+    def put(self, endpoint_url, data=None, json=None, **kwargs):
+        return self.session.put(
+            url=self._url + endpoint_url,
+            data=data,
+            json=json,
             **kwargs
         )

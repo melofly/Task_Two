@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class SuccessResponseRegister(BaseModel):
+class SuccessResponseMe(BaseModel):
     detail: str
 
 

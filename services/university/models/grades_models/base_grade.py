@@ -3,14 +3,10 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-class GradeEnum(IntEnum):
-    FAIL = 0
-    POOR = 1
-    GOOD = 2
-    VERY_GOOD = 3
-    EXCELLENT = 4
-    PERFECT = 5
+MIN_MARK = 0
+MAX_MARK = 5
 
+GRADE_INTERVAL = range(MIN_MARK, MAX_MARK + 1)
 
 class BaseModelGrades(BaseModel):
     model_config = ConfigDict(extra='forbid')

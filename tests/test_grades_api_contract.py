@@ -47,13 +47,13 @@ class TestGroupApiContract:
         grade = GradesRequest(
             teacher_id=teacher_response.id,
             student_id=student_response.id,
-            grade=random.choice([grade for grade in GradeEnum]),
+            grade=random.choice([grade for grade in range(MIN_MARK, MAX_MARK)]),
         )
 
         grade_t = GradesRequest(
             teacher_id=teacher_response.id,
             student_id=student_response.id,
-            grade=random.choice([grade for grade in GradeEnum]),
+            grade=random.choice([grade for grade in range(MIN_MARK, MAX_MARK)]),
         )
 
         grade_res = university_service.create_grade(create_grade_req=grade)

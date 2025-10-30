@@ -1,6 +1,3 @@
-from enum import IntEnum
-from typing import Literal
-
 from pydantic import BaseModel, ConfigDict, Field
 
 MIN_MARK = 0

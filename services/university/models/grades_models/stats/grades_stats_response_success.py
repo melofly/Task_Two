@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Optional
 
-from services.university.models.grades_models.base_grade import GradeEnum
+from services.university.models.grades_models.base_grade import MIN_MARK, MAX_MARK
 
 
 class GradeStatisticResponse(BaseModel):

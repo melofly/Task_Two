@@ -4,9 +4,17 @@ import  pytest
 from services.auth.auth_service import AuthService
 from services.auth.models.login.login_request import LoginRequest
 from services.auth.models.register.register_request import RegisterRequest
+from services.university.models.grades_models.base_grade import MIN_MARK, MAX_MARK
+from services.university.models.grades_models.grades_request import GradesRequest
+from services.university.models.groups_models.groups_request import GroupsRequest
+from services.university.models.students_models.base_student import DegreeEnum
+from services.university.models.students_models.student_request import StudentRequest
+from services.university.models.teachers_models.base_teachers import SubjectEnum
+from services.university.models.teachers_models.teachers_request import TeacherRequest
 from services.university.university_service import UniversityService
 from utils.api_utils import ApiUtils
 from faker import Faker
+import random
 import json
 
 faker = Faker()
@@ -57,11 +65,11 @@ def university_api_utils_admin(access_token):
         url=UniversityService.SERVICE_URL,
         headers={"Authorization":f"Bearer {access_token}"}
     )
+    print(f'{access_token}')
     return api_utils
 
 @pytest.fixture(scope='function')
 def university_api_test_group(university_api_utils_admin):
-    Logger.info('Создание группы')
     university_service = UniversityService(api_utils=university_api_utils_admin)
     group = GroupsRequest(name=faker.name())
     group_response = university_service.create_group(create_group_req=group)
@@ -69,7 +77,7 @@ def university_api_test_group(university_api_utils_admin):
 
 @pytest.fixture(scope='function')
 def university_api_test_student(university_api_test_group, university_api_utils_admin):
-    Logger.info('Создание студента')
+    Logger.info('Создаем студента')
     university_service = UniversityService(api_utils=university_api_utils_admin)
     student = StudentRequest(
         first_name=faker.first_name(),
@@ -84,7 +92,7 @@ def university_api_test_student(university_api_test_group, university_api_utils_
 
 @pytest.fixture(scope='function')
 def university_api_test_teacher(university_api_utils_admin):
-    Logger.info('Создание препода')
+    Logger.info('Создаем учителя')
     university_service = UniversityService(api_utils=university_api_utils_admin)
     teacher = TeacherRequest(
         first_name=faker.first_name(),
@@ -94,3 +102,18 @@ def university_api_test_teacher(university_api_utils_admin):
     teacher_response = university_service.create_teacher(create_teacher=teacher)
     return teacher_response
 
+@pytest.fixture(scope='function')
+def university_api_test_grade(
+        university_api_utils_admin,
+        university_api_test_student,
+        university_api_test_teacher
+):
+    Logger.info('Создаем оценку')
+    university_service = UniversityService(api_utils=university_api_utils_admin)
+    grade = GradesRequest(
+        teacher_id=university_api_test_teacher.id,
+        student_id=university_api_test_student.id,
+        grade=random.choice([grade for grade in range(MIN_MARK, MAX_MARK + 1)]),
+    )
+    grade_res = university_service.create_grade(create_grade_req=grade)
+    return grade_res

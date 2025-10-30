@@ -1,4 +1,5 @@
 from services.general.base_helper import BaseHelper
+from services.university.models.grades_models.stats.grades_stats_request import GradesStatsRequest
 
 
 class GradesHelper(BaseHelper):
@@ -28,7 +29,7 @@ class GradesHelper(BaseHelper):
         )
         return res
 
-    def get_stats_grade(self, params=None):
+    def get_stats_grade(self, params: GradesStatsRequest = None):
         res = self.api_utils.get(
             endpoint_url=self.GRADE_STATS,
             params=params

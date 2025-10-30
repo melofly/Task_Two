@@ -43,6 +43,6 @@ class UniversityService(BaseService):
         res = self.teacher_helper.post_create_teacher(json=create_teacher.model_dump())
         return TeacherResponse(**res.json())
 
-    def grade_stats(self, stats_student: GradesStatsRequest) -> GradeStatisticResponse:
+    def get_grade_stats(self, stats_student: GradesStatsRequest) -> GradeStatisticResponse:
         res = self.grades_helper.get_stats_grade(params=stats_student)
         return GradeStatisticResponse(**res.json())

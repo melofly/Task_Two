@@ -7,6 +7,7 @@ from services.auth.models.register.register_request import RegisterRequest
 from services.university.university_service import UniversityService
 from utils.api_utils import ApiUtils
 from faker import Faker
+import json
 
 faker = Faker()
 
@@ -58,4 +59,38 @@ def university_api_utils_admin(access_token):
     )
     return api_utils
 
+@pytest.fixture(scope='function')
+def university_api_test_group(university_api_utils_admin):
+    Logger.info('Создание группы')
+    university_service = UniversityService(api_utils=university_api_utils_admin)
+    group = GroupsRequest(name=faker.name())
+    group_response = university_service.create_group(create_group_req=group)
+    return group_response
+
+@pytest.fixture(scope='function')
+def university_api_test_student(university_api_test_group, university_api_utils_admin):
+    Logger.info('Создание студента')
+    university_service = UniversityService(api_utils=university_api_utils_admin)
+    student = StudentRequest(
+        first_name=faker.first_name(),
+        last_name=faker.last_name_female(),
+        email=faker.email(),
+        degree=random.choice([option for option in DegreeEnum]),
+        phone=faker.numerify('+79#########'),
+        group_id=university_api_test_group.id
+    )
+    student_response = university_service.create_student(create_student_request=student)
+    return student_response
+
+@pytest.fixture(scope='function')
+def university_api_test_teacher(university_api_utils_admin):
+    Logger.info('Создание препода')
+    university_service = UniversityService(api_utils=university_api_utils_admin)
+    teacher = TeacherRequest(
+        first_name=faker.first_name(),
+        last_name=faker.last_name_female(),
+        subject=random.choice([sbj for sbj in SubjectEnum])
+    )
+    teacher_response = university_service.create_teacher(create_teacher=teacher)
+    return teacher_response
 

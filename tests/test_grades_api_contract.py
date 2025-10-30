@@ -1,5 +1,6 @@
 import random
 
+import pytest
 from logger.logger import Logger
 from services.university.models.grades_models.base_grade import GradeEnum
 from services.university.models.grades_models.grades_request import GradesRequest
@@ -15,35 +16,15 @@ from faker import Faker
 faker = Faker()
 
 class TestGroupApiContract:
-    def test_student_create(self, university_api_utils_admin):
-        Logger.info('Создание группы')
-        university_service = UniversityService(api_utils=university_api_utils_admin)
-        group = GroupsRequest(name=faker.name())
-        group_response = university_service.create_group(create_group_req=group)
-
-        Logger.info('Создание студента')
-        student = StudentRequest(
-            first_name=faker.first_name(),
-            last_name=faker.last_name_female(),
-            email=faker.email(),
-            degree=random.choice([option for option in DegreeEnum]),
-            phone=faker.numerify('+79#########'),
-            group_id=group_response.id
-        )
-
-        student_response = university_service.create_student(create_student_request=student)
-
-        Logger.info('Создание препода')
-        teacher = TeacherRequest(
-            first_name=faker.first_name(),
-            last_name=faker.last_name_female(),
-            subject=random.choice([sbj for sbj in SubjectEnum])
-        )
-
-        teacher_response = university_service.create_teacher(create_teacher=teacher)
-
+    @pytest.mark.usefixtures('university_api_test_group')
+    def test_200_status(
+            self,
+            university_api_utils_admin,
+            university_api_test_teacher,
+            university_api_test_student
+    ):
         Logger.info('Создание оценки')
-
+        university_service = UniversityService(api_utils=university_api_utils_admin)
         grade = GradesRequest(
             teacher_id=teacher_response.id,
             student_id=student_response.id,
@@ -62,12 +43,12 @@ class TestGroupApiContract:
         Logger.info('Подсчет статы')
 
         grade_stats = GradesStatsRequest(
-            teacher_id=teacher_response.id,
-            student_id=student_response.id,
-            group_id=student_response.group_id
+            teacher_id=university_api_test_teacher.id,
+            student_id=university_api_test_student.id,
+            group_id=university_api_test_student.group_id
         )
 
-        grade_stats_response = university_service.grade_stats(stats_student=grade_stats)
+        grade_stats_response = university_service.get_grade_stats(stats_student=grade_stats)
 
         actual_min_max = [grade_stats_response.max, grade_stats_response.min]
         excepted_min_max = sorted([grade_res.grade, grade_res_t.grade], reverse=True)
@@ -78,10 +59,4 @@ class TestGroupApiContract:
         assert actual_min_max == excepted_min_max, f'{actual_min_max} вышло, а должно {excepted_min_max}'
         assert actual_avg == excepted_avg, f'{actual_avg} вышло, а должно {excepted_avg}'
 
-
-
-
-
-
-
-
+    def validation_min_max_keys(self):

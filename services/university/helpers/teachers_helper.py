@@ -20,24 +20,21 @@ class TeachersHelper(BaseHelper):
         )
         return res
 
-    def delete_teacher(self, index_t: str):
+    def delete_teacher(self, id: str):
         res = self.api_utils.delete(
-            endpoint_url=self.TEACHER_ID_ENDPOINT.format(teacher_id=index_t)
+            endpoint_url=self.TEACHER_ID_ENDPOINT.format(teacher_id=id)
         )
         return res
 
-    def get_teacher(self, index_t: str):
+    def get_teacher(self, id: str):
         res = self.api_utils.get(
-            endpoint_url=self.TEACHER_ID_ENDPOINT.format(teacher_id=index_t)
+            endpoint_url=self.TEACHER_ID_ENDPOINT.format(teacher_id=id)
         )
         return res
 
-    def put_teacher(self, index_t: str, json=None):
+    def put_teacher(self, id: str, json=None):
         res = self.api_utils.put(
-            endpoint_url=self.TEACHER_ID_ENDPOINT.format(teacher_id=index_t),
+            endpoint_url=self.TEACHER_ID_ENDPOINT.format(teacher_id=id),
             json=json
         )
         return res
-
-
-

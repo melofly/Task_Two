@@ -20,24 +20,21 @@ class GroupsHelper(BaseHelper):
         )
         return res
 
-    def delete_groups(self, index_group: str):
+    def delete_groups(self, id: str):
         res = self.api_utils.delete(
-            endpoint_url=self.GROUP_ID_ENDPOINT.format(group_id=index_group)
+            endpoint_url=self.GROUP_ID_ENDPOINT.format(group_id=id)
         )
         return res
 
-    def get_group(self, index_group: str):
+    def get_group(self, id: str):
         res = self.api_utils.get(
-            endpoint_url=self.GROUP_ID_ENDPOINT.format(group_id=index_group)
+            endpoint_url=self.GROUP_ID_ENDPOINT.format(group_id=id)
         )
         return res
 
-    def put_group(self, index_group: str, json=None):
+    def put_group(self, id: str, json=None):
         res = self.api_utils.put(
-            endpoint_url=self.GROUP_ID_ENDPOINT.format(group_id=index_group),
+            endpoint_url=self.GROUP_ID_ENDPOINT.format(group_id=id),
             json=json
         )
         return res
-
-
-

@@ -29,5 +29,8 @@ class TestStudentsContract:
 
         student_response = university_service.create_student(create_student_request=student)
 
-        assert student_response.group_id == group_response.id
+        actual = student_response.group_id
+        expected = group_response.id
+
+        assert actual == expected, f'не тот статус {actual} сейчас, а должен {expected}'
 

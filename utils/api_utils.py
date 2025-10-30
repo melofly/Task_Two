@@ -39,8 +39,8 @@ class ApiUtils:
         self._url = url
 
     @log_response
-    def get(self, endpoint_url, **kwargs):
-        return self.session.get(self._url + endpoint_url, **kwargs)
+    def get(self, endpoint_url, params=None, **kwargs):
+        return self.session.get(self._url + endpoint_url, params=params, **kwargs)
 
     @log_response
     def post(self, endpoint_url, data=None, json=None, **kwargs):

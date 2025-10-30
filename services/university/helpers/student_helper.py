@@ -20,24 +20,21 @@ class StudentHelper(BaseHelper):
         )
         return res
 
-    def delete_student(self, index_student: str):
+    def delete_student(self, id: str):
         res = self.api_utils.delete(
-            endpoint_url=self.STUDENT_ID_ENDPOINT.format(student_id=index_student)
+            endpoint_url=self.STUDENT_ID_ENDPOINT.format(student_id=id)
         )
         return res
 
-    def get_student(self, index_student: str):
+    def get_student(self, id: str):
         res = self.api_utils.get(
-            endpoint_url=self.STUDENT_ID_ENDPOINT.format(student_id=index_student)
+            endpoint_url=self.STUDENT_ID_ENDPOINT.format(student_id=id)
         )
         return res
 
-    def put_student(self, index_student: str, json=None):
+    def put_student(self, id: str, json=None):
         res = self.api_utils.put(
-            endpoint_url=self.STUDENT_ID_ENDPOINT.format(student_id=index_student),
+            endpoint_url=self.STUDENT_ID_ENDPOINT.format(student_id=id),
             json=json
         )
         return res
-
-
-

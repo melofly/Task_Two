@@ -77,7 +77,6 @@ def university_api_test_group(university_api_utils_admin):
 
 @pytest.fixture(scope='function')
 def university_api_test_student(university_api_test_group, university_api_utils_admin):
-    Logger.info('Создаем студента')
     university_service = UniversityService(api_utils=university_api_utils_admin)
     student = StudentRequest(
         first_name=faker.first_name(),
@@ -92,7 +91,6 @@ def university_api_test_student(university_api_test_group, university_api_utils_
 
 @pytest.fixture(scope='function')
 def university_api_test_teacher(university_api_utils_admin):
-    Logger.info('Создаем учителя')
     university_service = UniversityService(api_utils=university_api_utils_admin)
     teacher = TeacherRequest(
         first_name=faker.first_name(),
@@ -108,7 +106,6 @@ def university_api_test_grade(
         university_api_test_student,
         university_api_test_teacher
 ):
-    Logger.info('Создаем оценку')
     university_service = UniversityService(api_utils=university_api_utils_admin)
     grade = GradesRequest(
         teacher_id=university_api_test_teacher.id,
@@ -117,3 +114,20 @@ def university_api_test_grade(
     )
     grade_res = university_service.create_grade(create_grade_req=grade)
     return grade_res
+
+@pytest.fixture(scope='function')
+def university_api_test_any_grade(
+        university_api_utils_admin,
+        university_api_test_student,
+        university_api_test_teacher
+):
+    university_service = UniversityService(api_utils=university_api_utils_admin)
+    grade = GradesRequest(
+        teacher_id=university_api_test_teacher.id,
+        student_id=university_api_test_student.id,
+        grade=random.choice([grade for grade in range(MIN_MARK, MAX_MARK + 1)]),
+    )
+    grade_res = university_service.create_grade(create_grade_req=grade)
+    return grade_res
+
+

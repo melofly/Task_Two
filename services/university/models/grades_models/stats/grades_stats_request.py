@@ -4,6 +4,6 @@ from typing import Optional
 
 
 class GradesStatsRequest(BaseModel):
-    teacher_id: Optional[int] = None
-    student_id: Optional[int] = None
-    group_id: Optional[int] = None
+    teacher_id: int = None
+    student_id: int = None
+    group_id: int = None

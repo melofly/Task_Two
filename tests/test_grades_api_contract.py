@@ -10,6 +10,7 @@ from tests.conftest import university_api_test_student
 
 faker = Faker()
 
+
 class TestGradesApiContract:
     @pytest.mark.usefixtures('university_api_test_group')
     def test_success_create_grade(
@@ -24,7 +25,6 @@ class TestGradesApiContract:
             student_id=university_api_test_student.id,
             grade=random.choice([grade for grade in range(MIN_MARK, MAX_MARK + 1)]),
         )
-
         res = university_service.create_grade(create_grade_req=grade)
 
         actual = res.student_id
@@ -32,94 +32,34 @@ class TestGradesApiContract:
         assert actual == excepted, (f'Сейчас: {actual},'
                                     f'Должно: {excepted}')
 
-    @pytest.mark.usefixtures('university_api_test_group')
-    def test_student_id_params_grades_stat(
-            self,
-            university_api_utils_admin,
-            university_api_test_grade
-    ):
-        university_service = UniversityService(api_utils=university_api_utils_admin)
-        grade_stats = GradesStatsRequest(
-            student_id=university_api_test_grade.student_id,
-        )
-        res = university_service.get_grade_stats(grade_stats)
+    def test_grades_stats_min_accurate(self, university_api_test_grades_and_stats):
+        grade_one, grade_two, stats = university_api_test_grades_and_stats
 
-        actual = res.max
-        excepted = university_api_test_grade.grade
+        actual = stats.min
+        expected = min(grade_one.grade, grade_two.grade)
+        assert actual == expected, (f'Сейчас: {actual},'
+                                    f'Должно: {expected}')
 
-        assert actual == excepted, (f'Сейчас: {actual},'
-                                    f'Должно: {excepted}')
+    def test_grades_stats_max_accurate(self, university_api_test_grades_and_stats):
+        grade_one, grade_two, stats = university_api_test_grades_and_stats
 
-    @pytest.mark.usefixtures('university_api_test_group')
-    def test_group_id_params_grades_stat(
-            self,
-            university_api_utils_admin,
-            university_api_test_grade,
-            university_api_test_student
-    ):
-        university_service = UniversityService(api_utils=university_api_utils_admin)
-        grade_stats = GradesStatsRequest(
-            group_id=university_api_test_student.group_id,
-        )
-        res = university_service.get_grade_stats(grade_stats)
+        actual = stats.max
+        expected = max(grade_one.grade, grade_two.grade)
+        assert actual == expected, (f'Сейчас: {actual},'
+                                    f'Должно: {expected}')
 
-        actual = res.max
-        excepted = university_api_test_grade.grade
+    def test_grades_stats_avg_accurate(self, university_api_test_grades_and_stats):
+        grade_one, grade_two, stats = university_api_test_grades_and_stats
 
-        assert actual == excepted, (f'Сейчас: {actual},'
-                                    f'Должно: {excepted}')
+        actual = stats.avg
+        expected = (grade_one.grade + grade_two.grade) / 2
+        assert actual == expected, (f'Сейчас: {actual},'
+                                    f'Должно: {expected}')
 
-    @pytest.mark.usefixtures('university_api_test_group')
-    def test_teacher_id_params_grades_stat(
-            self,
-            university_api_utils_admin,
-            university_api_test_grade,
-    ):
-        university_service = UniversityService(api_utils=university_api_utils_admin)
-        grade_stats = GradesStatsRequest(
-            teacher_id=university_api_test_grade.teacher_id
-        )
-        res = university_service.get_grade_stats(grade_stats)
+    def test_grades_stats_count_accurate(self, university_api_test_grades_and_stats):
+        grade_one, grade_two, stats = university_api_test_grades_and_stats
 
-        actual = res.max
-        excepted = university_api_test_grade.grade
-
-        assert actual == excepted, (f'Сейчас: {actual},'
-                                    f'Должно: {excepted}')
-
-    @pytest.mark.usefixtures('university_api_test_group')
-    def test_no_params_grades_stat(
-            self,
-            university_api_utils_admin,
-            university_api_test_grade,
-            university_api_test_student
-    ):
-        university_service = UniversityService(api_utils=university_api_utils_admin)
-        grade_stats = GradesStatsRequest()
-        res = university_service.get_grade_stats(grade_stats)
-
-        actual = res.count
-        excepted = university_api_test_grade.id
-
-        assert actual == excepted, (f'Сейчас: {actual},'
-                                    f'Должно: {excepted}')
-
-    @pytest.mark.usefixtures('university_api_test_group')
-    def test_avg_grades_stat(
-            self,
-            university_api_utils_admin,
-            university_api_test_grade,
-            university_api_test_student,
-            university_api_test_any_grade
-    ):
-        university_service = UniversityService(api_utils=university_api_utils_admin)
-        grade_stats = GradesStatsRequest(
-            student_id=university_api_test_student.id
-        )
-        res = university_service.get_grade_stats(grade_stats)
-
-        actual = res.avg
-        excepted = (university_api_test_grade.grade + university_api_test_any_grade.grade) / 2
-
-        assert actual == excepted, (f'Сейчас: {actual},'
-                                    f'Должно: {excepted}')
+        actual = stats.count
+        expected = 2
+        assert actual == expected, (f'Сейчас: {actual},'
+                                    f'Должно: {expected}')

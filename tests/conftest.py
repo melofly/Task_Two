@@ -6,6 +6,7 @@ from services.auth.models.login.login_request import LoginRequest
 from services.auth.models.register.register_request import RegisterRequest
 from services.university.models.grades_models.base_grade import MIN_MARK, MAX_MARK
 from services.university.models.grades_models.grades_request import GradesRequest
+from services.university.models.grades_models.stats.grades_stats_request import GradesStatsRequest
 from services.university.models.groups_models.groups_request import GroupsRequest
 from services.university.models.students_models.base_student import DegreeEnum
 from services.university.models.students_models.student_request import StudentRequest
@@ -101,33 +102,25 @@ def university_api_test_teacher(university_api_utils_admin):
     return teacher_response
 
 @pytest.fixture(scope='function')
-def university_api_test_grade(
-        university_api_utils_admin,
-        university_api_test_student,
-        university_api_test_teacher
-):
+def university_api_test_grades_and_stats(university_api_utils_admin,
+                                         university_api_test_student,
+                                         university_api_test_teacher,
+                                         university_api_test_group):
     university_service = UniversityService(api_utils=university_api_utils_admin)
-    grade = GradesRequest(
+    grades = []
+    for i in range(2):
+        grade = GradesRequest(teacher_id=university_api_test_teacher.id,
+                              student_id=university_api_test_student.id,
+                              grade=random.choice([grade for grade in range(MIN_MARK, MAX_MARK + 1)]))
+        grade_res = university_service.create_grade(create_grade_req=grade)
+        grades.append(grade_res)
+    grade1, grade2 = grades
+
+    university_service = UniversityService(api_utils=university_api_utils_admin)
+    grade_stats = GradesStatsRequest(
         teacher_id=university_api_test_teacher.id,
         student_id=university_api_test_student.id,
-        grade=random.choice([grade for grade in range(MIN_MARK, MAX_MARK + 1)]),
+        group_id=university_api_test_group.id
     )
-    grade_res = university_service.create_grade(create_grade_req=grade)
-    return grade_res
-
-@pytest.fixture(scope='function')
-def university_api_test_any_grade(
-        university_api_utils_admin,
-        university_api_test_student,
-        university_api_test_teacher
-):
-    university_service = UniversityService(api_utils=university_api_utils_admin)
-    grade = GradesRequest(
-        teacher_id=university_api_test_teacher.id,
-        student_id=university_api_test_student.id,
-        grade=random.choice([grade for grade in range(MIN_MARK, MAX_MARK + 1)]),
-    )
-    grade_res = university_service.create_grade(create_grade_req=grade)
-    return grade_res
-
-
+    res_stats = university_service.get_grade_stats(grade_stats)
+    return grade1, grade2, res_stats

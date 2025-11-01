@@ -1,0 +1,13 @@
+from pydantic import BaseModel, ConfigDict, Field
+from typing import Optional
+
+from services.university.models.grades_models.base_grade import MIN_MARK, MAX_MARK
+
+
+class GradeStatisticResponse(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+
+    count: int = Field(ge=0)
+    min: int = Field(ge=MIN_MARK, le=MAX_MARK)
+    max: int = Field(ge=MIN_MARK, le=MAX_MARK)
+    avg: float = Field(ge=MIN_MARK, le=MAX_MARK)
